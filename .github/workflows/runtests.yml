@@ -20,18 +20,21 @@ jobs:
             - { compiler: 'gcc', version: '12'}
             - { compiler: 'gcc', version: '13'}
             - { compiler: 'gcc', version: '14'}
+            - { compiler: 'clang', version: '11'}
+            - { compiler: 'clang', version: '12'}
+            - { compiler: 'clang', version: '13'}
             - { compiler: 'clang', version: '14'}
             - { compiler: 'clang', version: '15'}
             - { compiler: 'clang', version: '16'}
             - { compiler: 'clang', version: '17'}
             - { compiler: 'clang', version: '18'}
-          include:
-            - os: 'ubuntu-22.04'
-              sys: { compiler: 'clang', version: '11'}
-            - os: 'ubuntu-22.04'
-              sys: { compiler: 'clang', version: '12'}
-            - os: 'ubuntu-22.04'
-              sys: { compiler: 'clang', version: '13'}
+          # include:
+          #   - os: 'ubuntu-22.04'
+          #     sys: { compiler: 'clang', version: '11'}
+          #   - os: 'ubuntu-22.04'
+          #     sys: { compiler: 'clang', version: '12'}
+          #   - os: 'ubuntu-22.04'
+          #     sys: { compiler: 'clang', version: '13'}
       runs-on: ${{ matrix.os }}
       steps:
          - name: "Checkout HPCombi repo . . ."
@@ -51,6 +54,7 @@ jobs:
            if: ${{ matrix.sys.compiler == 'clang' }}
            run: |
              LLVM_VERSION=${{ matrix.sys.version }}
+             sudo add-apt-repository universe
              sudo apt-get --yes update
              sudo apt-get install --yes clang++-$LLVM_VERSION
              CC=clang-$LLVM_VERSION
