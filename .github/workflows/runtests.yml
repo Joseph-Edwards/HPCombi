@@ -12,7 +12,7 @@ jobs:
       strategy:
         fail-fast: false
         matrix:
-          os: ['ubunut-latest']
+          os: ['ubuntu-latest']
           sys:
             - { compiler: 'gcc', version: '9'}
             - { compiler: 'gcc', version: '10'}
