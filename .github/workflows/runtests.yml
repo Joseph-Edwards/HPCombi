@@ -42,7 +42,9 @@ jobs:
            run: |
              LLVM_VERSION=${{ matrix.sys.version }}
              sudo apt-get --yes update
-             sudo apt-get install --yes clang++-$LLVM_VERSION
+             wget https://apt.llvm.org/llvm.sh
+             chmod +x llvm.sh
+             sudo ./llvm.sh $LLVM_VERSION
              CC=clang-$LLVM_VERSION
              echo "CC=$CC" >> $GITHUB_ENV
              CXX=clang++-$LLVM_VERSION
