@@ -61,6 +61,10 @@ jobs:
              echo "CC=$CC" >> $GITHUB_ENV
              CXX=clang++-$LLVM_VERSION
              echo "CXX=$CXX" >> $GITHUB_ENV
+         - name: "Compiler dependencies"
+           run: |
+              echo $CXX
+              $CXX --version
          - name: "Install dependencies . . ."
            run: |
              sudo apt-get install --yes ccache
