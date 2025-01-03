@@ -51,20 +51,29 @@ jobs:
              CXX=g++-$GCC_VERSION
              echo "CXX=$CXX" >> $GITHUB_ENV
          - name: "Setup compiler . . ."
-           if: ${{ matrix.sys.compiler == 'clang' }}
+           if: ${{ matrix.sys.compiler == 'clang' }}
+           uses: jaxxstorm/action-install-gh-release@v1.14.0
+           with: # Grab a specific platform and/or architecture
+            repo: llvm/llvm-project
+            tag: llvmorg-${{ matrix.sys.version }}.0.0
+            platform: linux
+            arch: x86_64
+            rename-to: clang-${{ matrix.sys.version }}
+            cache: enable
+            extension-matching: disable
+         - name: "Compiler dependencies"
+           if: ${{ matrix.sys.compiler == 'clang' }}
            run: |
-             LLVM_VERSION=${{ matrix.sys.version }}
-             sudo add-apt-repository universe
-             sudo apt-get --yes update
-             sudo apt-get install --yes clang++-$LLVM_VERSION
-             CC=clang-$LLVM_VERSION
-             echo "CC=$CC" >> $GITHUB_ENV
-             CXX=clang++-$LLVM_VERSION
-             echo "CXX=$CXX" >> $GITHUB_ENV
+            LLVM_VERSION=${{ matrix.sys.version }}
+            CC=clang-$LLVM_VERSION
+            echo "CC=$CC" >> $GITHUB_ENV
+            CXX=clang++-$LLVM_VERSION
+            echo "CXX=$CXX" >> $GITHUB_ENV
+            ls /opt/hostedtoolcache/llvm/llvmorg-12.0.0/linux-x86_64
          - name: "Compiler dependencies"
            run: |
-              echo $CXX
-              $CXX --version
+             echo $CXX
+             $CXX --version
          - name: "Install dependencies . . ."
            run: |
              sudo apt-get install --yes ccache
