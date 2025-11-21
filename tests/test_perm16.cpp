@@ -535,4 +535,11 @@ TEST_CASE_METHOD(Perm16Fixture, "Perm16::left_weak_leq", "[Perm16][044]") {
         }
     }
 }
+
+TEST_CASE("Vect16::operator==", "[Vect16][045]") {
+    Vect16 x({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+    Vect16 y({1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+    CHECK(!(x == y));
+    CHECK(std::hash<Vect16>{}(x) != std::hash<Vect16>{}(y));
+}
 }  // namespace HPCombi
